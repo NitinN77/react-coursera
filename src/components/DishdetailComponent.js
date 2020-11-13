@@ -1,15 +1,9 @@
-import React, { Component } from 'react';
-import { Card, CardImg, CardImgOverlay, CardText, CardBody,CardTitle } from 'reactstrap';
+import React from 'react';
+import { Card, CardImg, CardText, CardBody,CardTitle } from 'reactstrap';
 
-class DishDetail extends Component{
 
-    constructor(props){
-        super(props);
 
-        this.state = null;
-    }
-
-    renderDish(dish){
+ function RenderDish({dish}){
         return(
             <Card>
                 <CardImg width="100%" src = {dish.image} alt={dish.name} />
@@ -21,16 +15,18 @@ class DishDetail extends Component{
         );
     }
 
-    renderComments(dish){
+    function RenderComments({comments}){
         let options = { year: "numeric", month: "short", day: "numeric" };
-        const l = dish.comments.map((comment) => {
+        const l = comments.map((comment) => {
             return(
+                <div className="container">
                 <ul className="list-unstyled" key={comment.id}>
                     <li>
                         <p>{comment.comment}</p>
                         <p>-- {comment.author} , {new Date(comment.date).toLocaleDateString("en-US", options)}</p>
                     </li>
                 </ul>
+                </div>
             );
         })
         
@@ -42,16 +38,16 @@ class DishDetail extends Component{
         );
     }
 
-    render(){
-        const dish = this.props.dish;
+    const DishDetail = (props) => {
+        const dish = props.dish;
         if(dish!=null){
             return(
                 <div className="row">
                     <div className="col-md-5 m-1">
-                        {this.renderDish(dish)}
+                        <RenderDish dish={props.dish} />
                     </div>
                     <div className="col-md">
-                        {this.renderComments(dish)}
+                        <RenderComments comments={props.dish.comments} />
                     </div>
                 </div>
             );
@@ -63,6 +59,6 @@ class DishDetail extends Component{
         }
         
     }
-}
+
 
 export default DishDetail;
