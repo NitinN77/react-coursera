@@ -19,9 +19,15 @@ import { Link } from "react-router-dom";
 import { Control, LocalForm, Errors } from "react-redux-form";
 import { Loading } from './LoadingComponent';
 import { baseUrl } from '../shared/baseUrl';
+import { FadeTransform, Fade, Stagger } from 'react-animation-components';
 
 function RenderDish({ dish }) {
   return (
+    <FadeTransform
+                in
+                transformProps={{
+                    exitTransform: 'scale(0.5) translateY(-50%)'
+                }}>
     <Card>
       <CardImg width="100%" src={baseUrl + dish.image} alt={dish.name} />
       <CardBody>
@@ -29,6 +35,7 @@ function RenderDish({ dish }) {
         <CardText>{dish.description}</CardText>
       </CardBody>
     </Card>
+    </FadeTransform>
   );
 }
 
@@ -36,6 +43,7 @@ function RenderComments({ comments, dishId, postComment }) {
   let options = { year: "numeric", month: "short", day: "numeric" };
   const l = comments.map((comment) => {
     return (
+      <Fade in>
       <div className="container">
         <ul className="list-unstyled" key={comment.id}>
           <li>
@@ -47,6 +55,7 @@ function RenderComments({ comments, dishId, postComment }) {
           </li>
         </ul>
       </div>
+      </Fade>
     );
   });
 
